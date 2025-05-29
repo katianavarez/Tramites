@@ -12,4 +12,11 @@
         <exec.mainClass>org.tramitespersistencia.TramitesPersistencia</exec.mainClass>
     </properties>
     <name>AgenciaFiscalPersistencia</name>
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>AgenciaFiscalUtilerias</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
 </project>
