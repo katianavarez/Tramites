@@ -2,50 +2,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package entidades;
+package dtos;
 
 import enums.EstadoPlaca;
 import enums.TipoPlaca;
-import java.io.Serializable;
 import java.time.LocalDate;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.Table;
 
 /**
  *
  * @author katia
  */
-@Entity
-@Table(name = "placas")
-@PrimaryKeyJoinColumn(name = "id")
-public class Placa extends Tramite implements Serializable {
-
-    @Column(nullable = false, unique = true)
+public class PlacaDTO extends TramiteDTO{
     private String numeroPlaca;
-
-    @Column(nullable = false)
     private LocalDate fechaEmision;
-
-    @Column
     private LocalDate fechaRecepcion;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private EstadoPlaca estado;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private TipoPlaca tipo;
-
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "id_vehiculo")
-    private Vehiculo vehiculo;
+    private Long idVehiculo;
 
     public String getNumeroPlaca() {
         return numeroPlaca;
@@ -67,8 +40,8 @@ public class Placa extends Tramite implements Serializable {
         return tipo;
     }
 
-    public Vehiculo getVehiculo() {
-        return vehiculo;
+    public Long getIdVehiculo() {
+        return idVehiculo;
     }
 
     public void setNumeroPlaca(String numeroPlaca) {
@@ -91,13 +64,13 @@ public class Placa extends Tramite implements Serializable {
         this.tipo = tipo;
     }
 
-    public void setVehiculo(Vehiculo vehiculo) {
-        this.vehiculo = vehiculo;
+    public void setIdVehiculo(Long idVehiculo) {
+        this.idVehiculo = idVehiculo;
     }
 
     @Override
     public String toString() {
-        return "Placa{" + "numeroPlaca=" + numeroPlaca + ", fechaEmision=" + fechaEmision + ", fechaRecepcion=" + fechaRecepcion + ", estado=" + estado + ", tipo=" + tipo + ", vehiculo=" + vehiculo + '}';
+        return "PlacaDTO{" + "numeroPlaca=" + numeroPlaca + ", fechaEmision=" + fechaEmision + ", fechaRecepcion=" + fechaRecepcion + ", estado=" + estado + ", tipo=" + tipo + ", idVehiculo=" + idVehiculo + '}';
     }
     
     
