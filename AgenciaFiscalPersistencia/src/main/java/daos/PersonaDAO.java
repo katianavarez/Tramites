@@ -8,10 +8,7 @@ import conexion.Conexion;
 import entidades.Persona;
 import excepciones.PersistenciaException;
 import idaos.IPersonaDAO;
-import java.util.List;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import javax.persistence.TypedQuery;
 
 /**
  *

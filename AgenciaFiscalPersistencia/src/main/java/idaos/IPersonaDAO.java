@@ -6,7 +6,6 @@ package idaos;
 
 import entidades.Persona;
 import excepciones.PersistenciaException;
-import java.util.List;
 
 /**
  *
