@@ -17,12 +17,20 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 /**
- *
+ * Implementación de ILicenciaDAO que gestiona la persistencia de licencias
+ * usando JPA.
+ * Permite registrar y consultar.
  * @author katia
  */
 public class LicenciaDAO implements ILicenciaDAO{
     EntityManager em = Conexion.crearConexion();
     
+    /**
+     * Registra una licencia nueva en la base de datos.
+     * @param licencia La licencia que se desea registrar.
+     * @return La licencia registrada.
+     * @throws PersistenciaException Por si ocurre un error al guardar la licencia.
+     */
     @Override
     public Licencia registrarLicencia(Licencia licencia) throws PersistenciaException {
         try {
@@ -46,6 +54,12 @@ public class LicenciaDAO implements ILicenciaDAO{
         }
     }
 
+    /**
+     * Busca la licencia vigente más reciente de una persona.
+     * @param idPersona ID de la persona de quien se desea consultar la licencia vigente.
+     * @return La licencia vigente si existe. Null si no tiene vigente.
+     * @throws PersistenciaException En caso de error al consultar la bd.
+     */
     @Override
     public Licencia licenciaVigente(Long idPersona) throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();

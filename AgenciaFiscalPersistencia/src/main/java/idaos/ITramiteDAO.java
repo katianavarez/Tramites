@@ -5,7 +5,9 @@
 package idaos;
 
 /**
- *
+ * Interfaz para definer operaciones de acceso a datos relacionados
+ * con trámites.
+ * Abierta a extensión.
  * @author katia
  */
 public interface ITramiteDAO {    

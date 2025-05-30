@@ -11,13 +11,24 @@ import idaos.IPersonaDAO;
 import javax.persistence.EntityManager;
 
 /**
- *
+ * 
+ * Implementación de IPersonaDAO que gestiona las operaciones de persistencia de la
+ * entidad Persona, usando JPA.
+ * permite registrar personas, Y buscar por RFC o por ID.
+ * 
  * @author katia
  */
 public class PersonaDAO implements IPersonaDAO{
 
     EntityManager em = Conexion.crearConexion();
     
+    /**
+     * Registra una nueva persona en la base de datos.
+     *
+     * @param persona La persona a registrar.
+     * @return El objeto Persona registrado, incluyendo su ID generado.
+     * @throws PersistenciaException En caso de error durante la persistencia.
+     */
     @Override
     public Persona registrarPersona(Persona persona) throws PersistenciaException{
         try {
@@ -41,6 +52,13 @@ public class PersonaDAO implements IPersonaDAO{
         }
     }
 
+    /**
+     * Busca una persona por su RFC.
+     *
+     * @param rfc El RFC de la persona.
+     * @return La persona encontrada.
+     * @throws PersistenciaException si no se encuentra la persona o si ocurre un error de consulta.
+     */
     @Override
     public Persona buscarPersonaPorRFC(String rfc) throws PersistenciaException{
         try {
@@ -59,6 +77,13 @@ public class PersonaDAO implements IPersonaDAO{
         }
     }
     
+    /**
+     * Busca una persona por su identificador único.
+     *
+     * @param id El identificador de la persona.
+     * @return La persona encontrada.
+     * @throws PersistenciaException si no se encuentra la persona o si ocurre un error de consulta.
+     */
     @Override
     public Persona buscarPersonaPorId(Long id) throws PersistenciaException {
         try {

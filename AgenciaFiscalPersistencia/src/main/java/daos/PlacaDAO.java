@@ -14,12 +14,22 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 /**
- *
+ * Implementación de IPlacaDAO que gestiona las operaciones de epersistencia
+ * relacionadas con la entidad Placa.
+ * Permite registrar nuevas placas, obtener historial de placas, desactivar placas.
+ * 
  * @author katia
  */
 public class PlacaDAO implements IPlacaDAO{
     EntityManager em = Conexion.crearConexion();
     
+    /**
+     * Registra una nueva placa en la base de datos.
+     *
+     * @param placa La placa a registrar.
+     * @return La placa registrada.
+     * @throws PersistenciaException si ocurre un error durante el registro.
+     */
     @Override
     public Placa registrarPlaca(Placa placa) throws PersistenciaException {
         try {
@@ -42,6 +52,14 @@ public class PlacaDAO implements IPlacaDAO{
         }
     }
     
+     /**
+     * Obtiene el historial de placas asociadas a un vehículo identificado por su número de serie.
+     * El historial se devuelve en orden descendente.
+     *
+     * @param numeroSerie El número de serie del vehículo.
+     * @return Lista de placas asociadas al vehículo.
+     * @throws PersistenciaException si ocurre un error durante la consulta.
+     */
     @Override
     public List<Placa> obtenerHistorialPorNumSerie(String numeroSerie) throws PersistenciaException {
         try {
@@ -63,6 +81,13 @@ public class PlacaDAO implements IPlacaDAO{
         }
     }
     
+    /**
+     * Desactiva las placas activas de un vehículo antes de emitir una nueva.
+     * Cambia el estado de las placas con estado activa a inactiva.
+     *
+     * @param numeroSerie El número de serie del vehículo.
+     * @throws PersistenciaException si ocurre un error durante la actualización.
+     */
     @Override
     public void desactivarPlacasAnteriores(String numeroSerie) throws PersistenciaException {
         try {

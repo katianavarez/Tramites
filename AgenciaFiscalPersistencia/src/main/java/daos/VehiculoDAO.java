@@ -12,12 +12,22 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 /**
- *
+ * Implementación de la interfaz IVehiculoDAO que gestiona las operaciones de persistencia
+ * relacionadas con la entidad Vehiculo.
+ * Permite registrar, y buscar.
+ * 
  * @author katia
  */
 public class VehiculoDAO implements IVehiculoDAO{
     EntityManager em = Conexion.crearConexion();
     
+    /**
+     * Registra un nuevo vehículo en la base de datos.
+     * 
+     * @param vehiculo El vehículo a registrar.
+     * @return El objeto Vehiculo registrado.
+     * @throws PersistenciaException Por i ocurre un error al guardar el vehículo.
+     */
     @Override
     public Vehiculo registrarVehiculo(Vehiculo vehiculo) throws PersistenciaException {
         try {
@@ -40,6 +50,13 @@ public class VehiculoDAO implements IVehiculoDAO{
         }
     }
 
+    /**
+     * Busca un vehículo por su número de serie.
+     *
+     * @param numeroSerie El número de serie del vehículo a buscar.
+     * @return El vehículo encontrado.
+     * @throws PersistenciaException si no se encuentra o si ocurre un error en la consulta.
+     */
     @Override
     public Vehiculo buscarVehiculoPorNumSerie(String numeroSerie) throws PersistenciaException {
         try {

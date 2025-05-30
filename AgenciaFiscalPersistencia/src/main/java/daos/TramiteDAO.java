@@ -7,7 +7,8 @@ package daos;
 import idaos.ITramiteDAO;
 
 /**
- *
+ * Implementación de la interfaz ITramiteDAO.
+ * Por el momento no tiene métodos.
  * @author katia
  */
 public class TramiteDAO implements ITramiteDAO{
