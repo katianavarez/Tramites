@@ -5,7 +5,9 @@
 package dtos;
 
 /**
- *
+ * DTO que representa un automóvil.
+ * Hereda los atributos de vehículo.
+ * Por el momento no tiene atributos propios.
  * @author katia
  */
 public class AutomovilDTO extends VehiculoDTO{

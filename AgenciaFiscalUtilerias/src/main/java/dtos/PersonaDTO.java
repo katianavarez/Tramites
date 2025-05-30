@@ -7,7 +7,8 @@ package dtos;
 import java.time.LocalDate;
 
 /**
- *
+ * DTO que representa los datos de una persona.
+ * Se usa para transferir información entre presentación y negocio.
  * @author katia
  */
 public class PersonaDTO {

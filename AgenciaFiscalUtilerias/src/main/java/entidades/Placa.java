@@ -18,7 +18,9 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 /**
- *
+ * Entidad que representa una placa vehicular registrada en la agencia fiscal.
+ * Hereda de Trámite, comparte el id.
+ * Un vehículo puede tener distintas placas (pero solo 1 a la vez)
  * @author katia
  */
 @Entity

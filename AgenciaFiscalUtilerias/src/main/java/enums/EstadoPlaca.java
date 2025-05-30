@@ -5,7 +5,7 @@
 package enums;
 
 /**
- *
+ * Enum que representa el estado actual de una placa vehicular.
  * @author katia
  */
 public enum EstadoPlaca {

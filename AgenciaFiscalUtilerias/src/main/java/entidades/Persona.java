@@ -18,7 +18,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- *
+ * Entidad que representa a una persona registrada en la agencia fiscal.
+ * Puede haceer muchos trámites.
  * @author katia
  */
 @Entity

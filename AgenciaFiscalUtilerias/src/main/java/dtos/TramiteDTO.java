@@ -5,7 +5,8 @@
 package dtos;
 
 /**
- *
+ * DTO que representa los datos generales de un trámite.
+ * Contiene atributos comunes a todos los trámites.
  * @author katia
  */
 public class TramiteDTO {

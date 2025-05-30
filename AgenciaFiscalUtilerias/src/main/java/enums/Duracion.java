@@ -5,7 +5,8 @@
 package enums;
 
 /**
- *
+ * Enum que representa las duraciones para la vigencia de una licencia.
+ * Están representados en años.
  * @author katia
  */
 public enum Duracion {

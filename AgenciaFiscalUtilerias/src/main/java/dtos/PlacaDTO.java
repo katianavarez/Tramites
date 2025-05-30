@@ -9,7 +9,8 @@ import enums.TipoPlaca;
 import java.time.LocalDate;
 
 /**
- *
+ * DTO que simboliza la información de una placa de la agencia fiscal.
+ * Hereda atributos de TramiteDTO y tiene datos extra del vehículo.
  * @author katia
  */
 public class PlacaDTO extends TramiteDTO{

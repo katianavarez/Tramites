@@ -6,8 +6,6 @@ package entidades;
 
 import java.io.Serializable;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,7 +15,8 @@ import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
 /**
- *
+ * Entidad que representa un vehículo registrado en la agencia fiscal.
+ * Es la superclase, permite que haya subclases que hereden de ella.
  * @author katia
  */
 @Entity

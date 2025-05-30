@@ -17,7 +17,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- *
+ * Entidad que representa un trámite realizado por una persona en la agencia fiscal.
+ * Sirve como superclase para placas y licencias.
  * @author katia
  */
 @Entity

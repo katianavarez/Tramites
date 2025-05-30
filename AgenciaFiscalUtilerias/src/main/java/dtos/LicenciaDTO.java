@@ -8,7 +8,8 @@ import enums.Duracion;
 import java.time.LocalDate;
 
 /**
- *
+ * DTO que representa la información de una licencia de conducir.
+ * Hereda de TrámiteDTO atributos comunes, y tiene algunos extra.
  * @author katia
  */
 public class LicenciaDTO extends TramiteDTO{
