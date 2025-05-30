@@ -13,5 +13,5 @@ import excepciones.PersistenciaException;
  */
 public interface ILicenciaDAO {
     public Licencia registrarLicencia(Licencia licencia) throws PersistenciaException;
-    
+    public Licencia licenciaVigente(Long idPersona) throws PersistenciaException;
 }

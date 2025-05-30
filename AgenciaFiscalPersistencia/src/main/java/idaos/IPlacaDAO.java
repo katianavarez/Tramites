@@ -15,5 +15,5 @@ import java.util.List;
 public interface IPlacaDAO {
     public Placa registrarPlaca(Placa placa) throws PersistenciaException;
     public List<Placa> obtenerHistorialPorNumSerie(String numeroSerie) throws PersistenciaException;
-
+    public void desactivarPlacasAnteriores(String numeroSerie) throws PersistenciaException;
 }

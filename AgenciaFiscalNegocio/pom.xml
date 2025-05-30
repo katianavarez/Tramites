@@ -12,4 +12,16 @@
         <exec.mainClass>org.tramitesnegocio.TramitesNegocio</exec.mainClass>
     </properties>
     <name>AgenciaFiscalNegocio</name>
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.12.0</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>AgenciaFiscalPersistencia</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
 </project>

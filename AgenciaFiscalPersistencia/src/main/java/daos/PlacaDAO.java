@@ -6,6 +6,7 @@ package daos;
 
 import conexion.Conexion;
 import entidades.Placa;
+import enums.EstadoPlaca;
 import excepciones.PersistenciaException;
 import idaos.IPlacaDAO;
 import java.util.List;
@@ -62,4 +63,32 @@ public class PlacaDAO implements IPlacaDAO{
         }
     }
     
+    @Override
+    public void desactivarPlacasAnteriores(String numeroSerie) throws PersistenciaException {
+        try {
+            if (em == null || !em.isOpen()) {
+                em = Conexion.crearConexion();
+            }
+            em.getTransaction().begin();
+            
+            List<Placa> placas = em.createQuery(
+                "SELECT p FROM Placa p WHERE p.vehiculo.numeroSerie = :numSerie AND p.estado = :estadoActiva", Placa.class)
+                .setParameter("numSerie", numeroSerie)
+                .setParameter("estadoActiva", EstadoPlaca.ACTIVA)
+                .getResultList();
+
+            for (Placa placa : placas) {
+                placa.setEstado(EstadoPlaca.INACTIVA);
+                em.merge(placa);
+            }
+
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            throw new PersistenciaException("No se han podido desactivar las placas anteriores.", e);
+        } finally {
+            if (em != null && em.isOpen()) {
+                em.close();
+            }
+        }
+    }
 }

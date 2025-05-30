@@ -58,6 +58,22 @@ public class PersonaDAO implements IPersonaDAO{
             }
         }
     }
+    
+    @Override
+    public Persona buscarPersonaPorId(Long id) throws PersistenciaException {
+        try {
+            if (em == null || !em.isOpen()) {
+                em = Conexion.crearConexion();
+            }
+            return em.find(Persona.class, id);
+        } catch (Exception e) {
+            throw new PersistenciaException("No se ha podido obtener a la persona por su ID.", e);
+        } finally {
+            if (em != null && em.isOpen()) {
+                em.close();
+            }
+        }
+    }
 
     
 }
