@@ -4,6 +4,12 @@
  */
 package pantallas;
 
+import control.Control;
+import dtos.PlacaDTO;
+import excepciones.NegocioException;
+import java.time.LocalDate;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author katia
@@ -15,6 +21,9 @@ public class PantallaPlacasAutoUsado extends javax.swing.JFrame {
      */
     public PantallaPlacasAutoUsado() {
         initComponents();
+        String fechaEmision = LocalDate.now().toString();
+        txtFechaEmision.setText(fechaEmision);
+        txtFechaEmision.setEditable(false);
     }
 
     /**
@@ -27,15 +36,15 @@ public class PantallaPlacasAutoUsado extends javax.swing.JFrame {
     private void initComponents() {
 
         lblTitulo = new javax.swing.JLabel();
-        lblNombre = new javax.swing.JLabel();
-        lblApellidoP = new javax.swing.JLabel();
-        lblApellidoM = new javax.swing.JLabel();
-        lblRfc = new javax.swing.JLabel();
-        lblFechaNac = new javax.swing.JLabel();
-        lblTelefono = new javax.swing.JLabel();
-        lblDuracionLicencia = new javax.swing.JLabel();
-        lblCostoLicencia = new javax.swing.JLabel();
-        txtNumeroPlaca = new javax.swing.JTextField();
+        lblNumPlacaAnterior = new javax.swing.JLabel();
+        lblFechaEmision = new javax.swing.JLabel();
+        lblNumSerie = new javax.swing.JLabel();
+        lblMarca = new javax.swing.JLabel();
+        lblLinea = new javax.swing.JLabel();
+        lblColor = new javax.swing.JLabel();
+        lblModelo = new javax.swing.JLabel();
+        lblRfcPersona = new javax.swing.JLabel();
+        txtNumeroPlacaAnterior = new javax.swing.JTextField();
         txtFechaEmision = new javax.swing.JTextField();
         txtNumSerie = new javax.swing.JTextField();
         txtMarca = new javax.swing.JTextField();
@@ -45,8 +54,6 @@ public class PantallaPlacasAutoUsado extends javax.swing.JFrame {
         btnAtras = new javax.swing.JButton();
         btnRegistrarPlaca = new javax.swing.JButton();
         txtColor = new javax.swing.JTextField();
-        lblNombre1 = new javax.swing.JLabel();
-        txtNumeroPlaca1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("RegistroPersonaYLicencia");
@@ -56,42 +63,49 @@ public class PantallaPlacasAutoUsado extends javax.swing.JFrame {
         lblTitulo.setFont(new java.awt.Font("Ebrima", 1, 48)); // NOI18N
         lblTitulo.setText("Placas para automóvil usado");
 
-        lblNombre.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        lblNombre.setText("Número de placa anterior");
+        lblNumPlacaAnterior.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        lblNumPlacaAnterior.setText("Número de placa anterior");
 
-        lblApellidoP.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        lblApellidoP.setText("Fecha de emisión");
+        lblFechaEmision.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        lblFechaEmision.setText("Fecha de emisión");
 
-        lblApellidoM.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        lblApellidoM.setText("Número de serie");
+        lblNumSerie.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        lblNumSerie.setText("Número de serie");
 
-        lblRfc.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        lblRfc.setText("Marca");
+        lblMarca.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        lblMarca.setText("Marca");
 
-        lblFechaNac.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        lblFechaNac.setText("Línea");
+        lblLinea.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        lblLinea.setText("Línea");
 
-        lblTelefono.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        lblTelefono.setText("Color");
+        lblColor.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        lblColor.setText("Color");
 
-        lblDuracionLicencia.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        lblDuracionLicencia.setText("Modelo");
+        lblModelo.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        lblModelo.setText("Modelo");
 
-        lblCostoLicencia.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        lblCostoLicencia.setText("RFC de la persona");
+        lblRfcPersona.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        lblRfcPersona.setText("RFC de la persona");
 
         btnAtras.setBackground(new java.awt.Color(0, 0, 0));
         btnAtras.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnAtras.setForeground(new java.awt.Color(255, 255, 255));
         btnAtras.setText("Atrás");
+        btnAtras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtrasActionPerformed(evt);
+            }
+        });
 
         btnRegistrarPlaca.setBackground(new java.awt.Color(0, 0, 0));
         btnRegistrarPlaca.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnRegistrarPlaca.setForeground(new java.awt.Color(255, 255, 255));
         btnRegistrarPlaca.setText("Registrar Placa");
-
-        lblNombre1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        lblNombre1.setText("Número de placa nuevo");
+        btnRegistrarPlaca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarPlacaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -100,15 +114,14 @@ public class PantallaPlacasAutoUsado extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(166, 166, 166)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblNombre)
-                    .addComponent(lblApellidoP)
-                    .addComponent(lblApellidoM)
-                    .addComponent(lblRfc)
-                    .addComponent(lblFechaNac)
-                    .addComponent(lblTelefono)
-                    .addComponent(lblCostoLicencia)
-                    .addComponent(lblNombre1)
-                    .addComponent(lblDuracionLicencia))
+                    .addComponent(lblNumPlacaAnterior)
+                    .addComponent(lblFechaEmision)
+                    .addComponent(lblNumSerie)
+                    .addComponent(lblMarca)
+                    .addComponent(lblLinea)
+                    .addComponent(lblColor)
+                    .addComponent(lblRfcPersona)
+                    .addComponent(lblModelo))
                 .addGap(69, 69, 69)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtRfc, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -118,8 +131,7 @@ public class PantallaPlacasAutoUsado extends javax.swing.JFrame {
                     .addComponent(txtLinea, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtNumSerie, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtFechaEmision, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNumeroPlaca1, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNumeroPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNumeroPlacaAnterior, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(133, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(31, 31, 31)
@@ -137,29 +149,22 @@ public class PantallaPlacasAutoUsado extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addComponent(lblTitulo)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtNumeroPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblNombre))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtNumeroPlaca1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lblNombre1)
-                        .addGap(18, 18, 18)))
+                .addGap(70, 70, 70)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblApellidoP)
+                    .addComponent(lblNumPlacaAnterior)
+                    .addComponent(txtNumeroPlacaAnterior, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblFechaEmision)
                     .addComponent(txtFechaEmision, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNumSerie, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblApellidoM))
+                    .addComponent(lblNumSerie))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblRfc))
+                    .addComponent(lblMarca))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -173,75 +178,72 @@ public class PantallaPlacasAutoUsado extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnRegistrarPlaca))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblFechaNac)
+                        .addComponent(lblLinea)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lblTelefono)
+                        .addComponent(lblColor)
                         .addGap(18, 18, 18)
-                        .addComponent(lblDuracionLicencia)
+                        .addComponent(lblModelo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lblCostoLicencia)
+                        .addComponent(lblRfcPersona)
                         .addGap(2, 2, 2)
                         .addComponent(btnAtras)))
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+    private void btnRegistrarPlacaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarPlacaActionPerformed
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PantallaPlacasAutoUsado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PantallaPlacasAutoUsado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PantallaPlacasAutoUsado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PantallaPlacasAutoUsado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
+            PlacaDTO dto = new PlacaDTO();
+            dto.setNumeroPlaca(txtNumeroPlacaAnterior.getText().trim());
+            dto.setNumeroSerie(txtNumSerie.getText().trim());
+            dto.setMarca(txtMarca.getText().trim());
+            dto.setLinea(txtLinea.getText().trim());
+            dto.setColor(txtColor.getText().trim());
+            dto.setModelo(Integer.parseInt(txtModelo.getText().trim()));
+            dto.setFechaEmision(LocalDate.parse(txtFechaEmision.getText().trim())); // convertir el texto en fecha
+            String rfc = txtRfc.getText().trim();
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new PantallaPlacasAutoUsado().setVisible(true);
-            }
-        });
+            PlacaDTO registrada = Control.getInstancia().registrarPlacaAutoUsado(dto, rfc);
+
+            JOptionPane.showMessageDialog(this, "Placa registrada con éxito:\n" + registrada.getNumeroPlaca());
+            limpiarCampos();
+
+        } catch (NegocioException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error al registrar la placa de auto usado. Verifique los datos.", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnRegistrarPlacaActionPerformed
+
+    private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
+        Control.getInstancia().mostrarPantallaMenuPlacas();
+        this.dispose();
+    }//GEN-LAST:event_btnAtrasActionPerformed
+
+    private void limpiarCampos() {
+        txtNumeroPlacaAnterior.setText("");
+        txtNumSerie.setText("");
+        txtMarca.setText("");
+        txtLinea.setText("");
+        txtColor.setText("");
+        txtModelo.setText("");
+        txtRfc.setText("");
+        txtFechaEmision.setText(LocalDate.now().toString());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtras;
     private javax.swing.JButton btnRegistrarPlaca;
-    private javax.swing.JLabel lblApellidoM;
-    private javax.swing.JLabel lblApellidoP;
-    private javax.swing.JLabel lblCostoLicencia;
-    private javax.swing.JLabel lblDuracionLicencia;
-    private javax.swing.JLabel lblFechaNac;
-    private javax.swing.JLabel lblNombre;
-    private javax.swing.JLabel lblNombre1;
-    private javax.swing.JLabel lblRfc;
-    private javax.swing.JLabel lblTelefono;
+    private javax.swing.JLabel lblColor;
+    private javax.swing.JLabel lblFechaEmision;
+    private javax.swing.JLabel lblLinea;
+    private javax.swing.JLabel lblMarca;
+    private javax.swing.JLabel lblModelo;
+    private javax.swing.JLabel lblNumPlacaAnterior;
+    private javax.swing.JLabel lblNumSerie;
+    private javax.swing.JLabel lblRfcPersona;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JTextField txtColor;
     private javax.swing.JTextField txtFechaEmision;
@@ -249,8 +251,7 @@ public class PantallaPlacasAutoUsado extends javax.swing.JFrame {
     private javax.swing.JTextField txtMarca;
     private javax.swing.JTextField txtModelo;
     private javax.swing.JTextField txtNumSerie;
-    private javax.swing.JTextField txtNumeroPlaca;
-    private javax.swing.JTextField txtNumeroPlaca1;
+    private javax.swing.JTextField txtNumeroPlacaAnterior;
     private javax.swing.JTextField txtRfc;
     // End of variables declaration//GEN-END:variables
 }

@@ -4,6 +4,12 @@
  */
 package pantallas;
 
+import control.Control;
+import dtos.PlacaDTO;
+import excepciones.NegocioException;
+import java.time.LocalDate;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author katia
@@ -15,6 +21,9 @@ public class PantallaPlacasAutoNuevo extends javax.swing.JFrame {
      */
     public PantallaPlacasAutoNuevo() {
         initComponents();
+        String fechaEmision = LocalDate.now().toString();
+        txtFechaEmision.setText(fechaEmision);
+        txtFechaEmision.setEditable(false);
     }
 
     /**
@@ -27,15 +36,13 @@ public class PantallaPlacasAutoNuevo extends javax.swing.JFrame {
     private void initComponents() {
 
         lblTitulo = new javax.swing.JLabel();
-        lblNombre = new javax.swing.JLabel();
-        lblApellidoP = new javax.swing.JLabel();
-        lblApellidoM = new javax.swing.JLabel();
+        lblFechaEmision = new javax.swing.JLabel();
+        lblNumSerie = new javax.swing.JLabel();
+        lblMarca = new javax.swing.JLabel();
+        lblLinea = new javax.swing.JLabel();
+        lblColor = new javax.swing.JLabel();
+        lblModelo = new javax.swing.JLabel();
         lblRfc = new javax.swing.JLabel();
-        lblFechaNac = new javax.swing.JLabel();
-        lblTelefono = new javax.swing.JLabel();
-        lblDuracionLicencia = new javax.swing.JLabel();
-        lblCostoLicencia = new javax.swing.JLabel();
-        txtNumeroPlaca = new javax.swing.JTextField();
         txtFechaEmision = new javax.swing.JTextField();
         txtNumSerie = new javax.swing.JTextField();
         txtMarca = new javax.swing.JTextField();
@@ -53,39 +60,46 @@ public class PantallaPlacasAutoNuevo extends javax.swing.JFrame {
         lblTitulo.setFont(new java.awt.Font("Ebrima", 1, 48)); // NOI18N
         lblTitulo.setText("Placas para automóvil nuevo");
 
-        lblNombre.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        lblNombre.setText("Número de placa");
+        lblFechaEmision.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        lblFechaEmision.setText("Fecha de emisión");
 
-        lblApellidoP.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        lblApellidoP.setText("Fecha de emisión");
+        lblNumSerie.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        lblNumSerie.setText("Número de serie");
 
-        lblApellidoM.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        lblApellidoM.setText("Número de serie");
+        lblMarca.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        lblMarca.setText("Marca");
+
+        lblLinea.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        lblLinea.setText("Línea");
+
+        lblColor.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        lblColor.setText("Color");
+
+        lblModelo.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        lblModelo.setText("Modelo");
 
         lblRfc.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        lblRfc.setText("Marca");
-
-        lblFechaNac.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        lblFechaNac.setText("Línea");
-
-        lblTelefono.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        lblTelefono.setText("Color");
-
-        lblDuracionLicencia.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        lblDuracionLicencia.setText("Modelo");
-
-        lblCostoLicencia.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        lblCostoLicencia.setText("RFC de la persona");
+        lblRfc.setText("RFC de la persona");
 
         btnAtras.setBackground(new java.awt.Color(0, 0, 0));
         btnAtras.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnAtras.setForeground(new java.awt.Color(255, 255, 255));
         btnAtras.setText("Atrás");
+        btnAtras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtrasActionPerformed(evt);
+            }
+        });
 
         btnRegistrarPlaca.setBackground(new java.awt.Color(0, 0, 0));
         btnRegistrarPlaca.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnRegistrarPlaca.setForeground(new java.awt.Color(255, 255, 255));
         btnRegistrarPlaca.setText("Registrar Placa");
+        btnRegistrarPlaca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarPlacaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -94,14 +108,13 @@ public class PantallaPlacasAutoNuevo extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(166, 166, 166)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblNombre)
-                    .addComponent(lblApellidoP)
-                    .addComponent(lblApellidoM)
-                    .addComponent(lblRfc)
-                    .addComponent(lblFechaNac)
-                    .addComponent(lblTelefono)
-                    .addComponent(lblDuracionLicencia)
-                    .addComponent(lblCostoLicencia))
+                    .addComponent(lblFechaEmision)
+                    .addComponent(lblNumSerie)
+                    .addComponent(lblMarca)
+                    .addComponent(lblLinea)
+                    .addComponent(lblColor)
+                    .addComponent(lblModelo)
+                    .addComponent(lblRfc))
                 .addGap(72, 72, 72)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtFechaEmision)
@@ -110,7 +123,6 @@ public class PantallaPlacasAutoNuevo extends javax.swing.JFrame {
                     .addComponent(txtLinea, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
                     .addComponent(txtModelo, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
                     .addComponent(txtRfc, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
-                    .addComponent(txtNumeroPlaca)
                     .addComponent(txtColor, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE))
                 .addContainerGap(226, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
@@ -129,38 +141,34 @@ public class PantallaPlacasAutoNuevo extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addComponent(lblTitulo)
-                .addGap(33, 33, 33)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lblNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtNumeroPlaca))
-                .addGap(18, 18, 18)
+                .addGap(83, 83, 83)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblApellidoP)
+                    .addComponent(lblFechaEmision)
                     .addComponent(txtFechaEmision, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblApellidoM)
+                    .addComponent(lblNumSerie)
                     .addComponent(txtNumSerie, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblRfc))
+                    .addComponent(lblMarca))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtLinea, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblFechaNac))
+                    .addComponent(lblLinea))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblTelefono)
+                    .addComponent(lblColor)
                     .addComponent(txtColor, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblDuracionLicencia)
+                        .addComponent(lblModelo)
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtRfc, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblCostoLicencia))
+                            .addComponent(lblRfc))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnAtras)
@@ -174,55 +182,55 @@ public class PantallaPlacasAutoNuevo extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+    private void btnRegistrarPlacaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarPlacaActionPerformed
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PantallaPlacasAutoNuevo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PantallaPlacasAutoNuevo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PantallaPlacasAutoNuevo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PantallaPlacasAutoNuevo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
+            PlacaDTO dto = new PlacaDTO();
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new PantallaPlacasAutoNuevo().setVisible(true);
-            }
-        });
+            dto.setNumeroSerie(txtNumSerie.getText().trim());
+            dto.setMarca(txtMarca.getText().trim());
+            dto.setLinea(txtLinea.getText().trim());
+            dto.setColor(txtColor.getText().trim());
+            dto.setModelo(Integer.parseInt(txtModelo.getText().trim()));
+            String rfc = txtRfc.getText().trim();
+
+            PlacaDTO registrada = Control.getInstancia().registrarPlacaAutoNuevo(dto, rfc);
+
+            JOptionPane.showMessageDialog(this, "Placa registrada con éxito:\n" + registrada.getNumeroPlaca());
+
+            limpiarCampos();
+        } catch (NegocioException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error al registrar la placa.", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnRegistrarPlacaActionPerformed
+
+    private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
+        Control.getInstancia().mostrarPantallaMenuPlacas();
+        this.dispose();
+    }//GEN-LAST:event_btnAtrasActionPerformed
+
+    private void limpiarCampos() {
+        txtNumSerie.setText("");
+        txtMarca.setText("");
+        txtLinea.setText("");
+        txtColor.setText("");
+        txtModelo.setText("");
+        txtRfc.setText("");
+        txtFechaEmision.setText(LocalDate.now().toString());
     }
 
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtras;
     private javax.swing.JButton btnRegistrarPlaca;
-    private javax.swing.JLabel lblApellidoM;
-    private javax.swing.JLabel lblApellidoP;
-    private javax.swing.JLabel lblCostoLicencia;
-    private javax.swing.JLabel lblDuracionLicencia;
-    private javax.swing.JLabel lblFechaNac;
-    private javax.swing.JLabel lblNombre;
+    private javax.swing.JLabel lblColor;
+    private javax.swing.JLabel lblFechaEmision;
+    private javax.swing.JLabel lblLinea;
+    private javax.swing.JLabel lblMarca;
+    private javax.swing.JLabel lblModelo;
+    private javax.swing.JLabel lblNumSerie;
     private javax.swing.JLabel lblRfc;
-    private javax.swing.JLabel lblTelefono;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JTextField txtColor;
     private javax.swing.JTextField txtFechaEmision;
@@ -230,7 +238,6 @@ public class PantallaPlacasAutoNuevo extends javax.swing.JFrame {
     private javax.swing.JTextField txtMarca;
     private javax.swing.JTextField txtModelo;
     private javax.swing.JTextField txtNumSerie;
-    private javax.swing.JTextField txtNumeroPlaca;
     private javax.swing.JTextField txtRfc;
     // End of variables declaration//GEN-END:variables
 }

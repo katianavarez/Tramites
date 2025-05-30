@@ -17,4 +17,5 @@ public interface IPersonaBO {
     public PersonaDTO buscarPersonaPorRFC(String rfc) throws NegocioException;
     public PersonaDTO registrarPersonaConLicencia(PersonaDTO personaDTO, LicenciaDTO licenciaDTO) throws NegocioException;
     public PersonaDTO buscarPersonaPorId(Long id) throws NegocioException;
+    public void insertarMasivamentePersonasConLicencia(int cantidad) throws NegocioException;
 }

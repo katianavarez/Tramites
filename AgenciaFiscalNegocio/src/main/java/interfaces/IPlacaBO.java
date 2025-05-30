@@ -14,6 +14,7 @@ import java.util.List;
  */
 public interface IPlacaBO {
     public PlacaDTO registrarPlacaAutoNuevo(PlacaDTO dto, String rfcPersona) throws NegocioException;
-    public PlacaDTO registrarPlacaAutoUsado(PlacaDTO dto) throws NegocioException;    
+    public PlacaDTO registrarPlacaAutoUsado(PlacaDTO dto, String rfcPersona) throws NegocioException;    
     public List<PlacaDTO> obtenerHistorialPorNumSerie(String numeroSerie) throws NegocioException;
+    public PlacaDTO generarPlacaAutoNuevo();
 }

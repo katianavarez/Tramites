@@ -4,6 +4,8 @@
  */
 package pantallas;
 
+import control.Control;
+
 /**
  *
  * @author katia
@@ -33,7 +35,6 @@ public class PantallaMenuPlacas extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("MenuPlacas");
-        setPreferredSize(new java.awt.Dimension(880, 610));
         setResizable(false);
 
         lblTitulo.setFont(new java.awt.Font("Ebrima", 1, 80)); // NOI18N
@@ -43,16 +44,31 @@ public class PantallaMenuPlacas extends javax.swing.JFrame {
         btnAutoNuevo.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 24)); // NOI18N
         btnAutoNuevo.setForeground(new java.awt.Color(255, 255, 255));
         btnAutoNuevo.setText("Para automóvil nuevo");
+        btnAutoNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAutoNuevoActionPerformed(evt);
+            }
+        });
 
         btnAutoUsado.setBackground(new java.awt.Color(0, 0, 0));
         btnAutoUsado.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 24)); // NOI18N
         btnAutoUsado.setForeground(new java.awt.Color(255, 255, 255));
         btnAutoUsado.setText("Para automóvil usado");
+        btnAutoUsado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAutoUsadoActionPerformed(evt);
+            }
+        });
 
         btnAtras.setBackground(new java.awt.Color(0, 0, 0));
         btnAtras.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 24)); // NOI18N
         btnAtras.setForeground(new java.awt.Color(255, 255, 255));
         btnAtras.setText("Atrás");
+        btnAtras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtrasActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -89,40 +105,21 @@ public class PantallaMenuPlacas extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PantallaMenuPlacas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PantallaMenuPlacas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PantallaMenuPlacas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PantallaMenuPlacas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void btnAutoNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAutoNuevoActionPerformed
+        Control.getInstancia().mostrarPantallaPlacasAutoNuevo();
+        this.dispose();
+    }//GEN-LAST:event_btnAutoNuevoActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new PantallaMenuPlacas().setVisible(true);
-            }
-        });
-    }
+    private void btnAutoUsadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAutoUsadoActionPerformed
+        Control.getInstancia().mostrarPantallaPlacasAutoUsado();
+        this.dispose();
+    }//GEN-LAST:event_btnAutoUsadoActionPerformed
+
+    private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
+        Control.getInstancia().mostrarPantallaInicio();
+        this.dispose();
+    }//GEN-LAST:event_btnAtrasActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtras;

@@ -211,6 +211,9 @@
     <Component class="javax.swing.JTextField" name="txtTelefono">
     </Component>
     <Component class="javax.swing.JTextField" name="txtCostoLicencia">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtCostoLicenciaActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnAtras">
       <Properties>
@@ -225,6 +228,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Atr&#xe1;s"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAtrasActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnRegistrarPersonaYLicencia">
       <Properties>
@@ -239,6 +245,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Registrar Persona y Licencia"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRegistrarPersonaYLicenciaActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JComboBox" name="cmbDuracionLicencia">
       <Properties>

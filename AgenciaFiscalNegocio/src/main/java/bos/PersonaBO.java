@@ -9,12 +9,15 @@ import dtos.PersonaDTO;
 import encriptador.Encriptador;
 import entidades.Licencia;
 import entidades.Persona;
+import enums.Duracion;
 import excepciones.NegocioException;
 import excepciones.PersistenciaException;
 import idaos.ILicenciaDAO;
 import idaos.IPersonaDAO;
+import interfaces.ILicenciaBO;
 import interfaces.IPersonaBO;
 import java.time.LocalDate;
+import java.time.Month;
 import mappers.LicenciaMapper;
 import mappers.PersonaMapper;
 
@@ -27,21 +30,23 @@ public class PersonaBO implements IPersonaBO{
     private final PersonaMapper mapper;
     private final ILicenciaDAO licenciaDAO;
     private final LicenciaMapper licenciaMapper;
+    private final ILicenciaBO licenciaBO;
 
-    public PersonaBO(IPersonaDAO personaDAO, ILicenciaDAO licenciaDAO) {
+
+    public PersonaBO(IPersonaDAO personaDAO, ILicenciaDAO licenciaDAO, ILicenciaBO licenciaBO) {
         this.personaDAO = personaDAO;
         this.mapper = new PersonaMapper();
         this.licenciaDAO = licenciaDAO;
         this.licenciaMapper = new LicenciaMapper();
+        this.licenciaBO = licenciaBO;
     }
 
     @Override
     public PersonaDTO registrarPersona(PersonaDTO personaDTO) throws NegocioException {
         try {
             validarPersona(personaDTO);
+            personaDTO.setTelefono(Encriptador.encriptar(personaDTO.getTelefono().trim()));
             Persona persona = mapper.toEntity(personaDTO);
-            persona.setTelefono(Encriptador.encriptar(personaDTO.getTelefono().trim()));
-
             Persona registrada = personaDAO.registrarPersona(persona);
             return mapper.toDTO(registrada);
 
@@ -58,22 +63,14 @@ public class PersonaBO implements IPersonaBO{
             if (licenciaDTO.getDuracion() == null) {
                 throw new NegocioException("La duración de la licencia es obligatoria.");
             }
-
-            Persona persona = new Persona();
-            persona.setRfc(personaDTO.getRfc().trim());
-            persona.setNombre(personaDTO.getNombre().trim());
-            persona.setApellidoPaterno(personaDTO.getApellidoPaterno().trim());
-            persona.setApellidoMaterno(personaDTO.getApellidoMaterno() != null ? personaDTO.getApellidoMaterno().trim() : null);
-            persona.setTelefono(Encriptador.encriptar(personaDTO.getTelefono().trim()));
-            persona.setFechaNacimiento(personaDTO.getFechaNacimiento());
-
+            
+            personaDTO.setTelefono(Encriptador.encriptar(personaDTO.getTelefono().trim()));
+            Persona persona = mapper.toEntity(personaDTO);
             Persona personaRegistrada = personaDAO.registrarPersona(persona);
 
-            LicenciaDTO nuevaLicDTO = new LicenciaDTO();
-            nuevaLicDTO.setDuracion(licenciaDTO.getDuracion());
-            nuevaLicDTO.setFechaExpedicion(LocalDate.now());
-            nuevaLicDTO.setIdPersona(personaRegistrada.getId());
-
+            licenciaDTO.setFechaExpedicion(LocalDate.now());
+            licenciaDTO.setIdPersona(personaRegistrada.getId());
+            
             double costo = 0;
             switch (licenciaDTO.getDuracion()) {
                 case UNO -> costo = 500;
@@ -81,9 +78,9 @@ public class PersonaBO implements IPersonaBO{
                 case TRES -> costo = 1200;
             }
             
-            nuevaLicDTO.setCosto(costo);
+            licenciaDTO.setCosto(costo);
 
-            Licencia licencia = licenciaMapper.toEntity(nuevaLicDTO);
+            Licencia licencia = licenciaMapper.toEntity(licenciaDTO);
             licenciaDAO.registrarLicencia(licencia);
 
             return mapper.toDTO(personaRegistrada);
@@ -125,19 +122,8 @@ public class PersonaBO implements IPersonaBO{
         if (personaDTO.getNombre() == null || personaDTO.getNombre().isBlank()) {
             throw new NegocioException("El nombre es obligatorio.");
         }
-        if (!personaDTO.getNombre().matches("[a-zA-ZÁÉÍÓÚáéíóúñÑ ]+")) {
-            throw new NegocioException("El nombre solo puede tener letras.");
-        }
         if (personaDTO.getApellidoPaterno() == null || personaDTO.getApellidoPaterno().isBlank()) {
             throw new NegocioException("El apellido paterno es obligatorio.");
-        }
-        if (!personaDTO.getApellidoPaterno().matches("[a-zA-ZÁÉÍÓÚáéíóúñÑ ]+")) {
-            throw new NegocioException("El apellido paterno solo puede tener letras.");
-        }
-        if (personaDTO.getApellidoMaterno() != null && !personaDTO.getApellidoMaterno().trim().isEmpty()) {
-            if (!personaDTO.getApellidoMaterno().matches("[a-zA-ZÁÉÍÓÚáéíóúñÑ ]+")) {
-                throw new NegocioException("El apellido materno solo puede tener letras.");
-            }
         }
         if (personaDTO.getTelefono() == null || personaDTO.getTelefono().isBlank()) {
             throw new NegocioException("El teléfono es obligatorio.");
@@ -150,6 +136,42 @@ public class PersonaBO implements IPersonaBO{
         }
         if (personaDTO.getFechaNacimiento().isAfter(LocalDate.now())) {
             throw new NegocioException("Fecha de nacimiento inválida.");
+        }
+    }
+    
+    @Override
+    public void insertarMasivamentePersonasConLicencia(int cantidad) throws NegocioException {
+        if (cantidad <= 0) {
+            throw new NegocioException("La cantidad debe ser un número positivo.");
+        }
+
+        for (int i = 1; i <= cantidad; i++) {
+            try {
+                PersonaDTO persona = new PersonaDTO();
+                persona.setNombre("Jose" + i);
+                persona.setApellidoPaterno("Lopez" + i);
+                persona.setApellidoMaterno("Soto" + i);
+                
+                String rfcBase = "RFC" + String.format("%010d", i); // RFC0000000001
+                String rfc = rfcBase.substring(0, 13);
+                persona.setRfc(rfc);
+                
+                persona.setTelefono(String.format("66200000%02d", i));
+                persona.setFechaNacimiento(LocalDate.of(1990 + (i % 10), Month.JANUARY, (i % 28) + 1));
+
+                PersonaDTO personaRegistrada = registrarPersona(persona);
+
+                LicenciaDTO licencia = new LicenciaDTO();
+                licencia.setIdPersona(personaRegistrada.getId());
+                licencia.setCosto(1200.0);
+                licencia.setFechaExpedicion(LocalDate.now());
+                licencia.setDuracion(Duracion.TRES);
+
+                licenciaBO.registrarLicencia(licencia);
+
+            } catch (NegocioException e) {
+                System.err.println("Error al insertar personas" + e.getMessage());
+            }
         }
     }
 }

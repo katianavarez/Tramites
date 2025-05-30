@@ -10,9 +10,6 @@
     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
       <Color id="Default Cursor"/>
     </Property>
-    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[880, 610]"/>
-    </Property>
     <Property name="resizable" type="boolean" value="false"/>
   </Properties>
   <SyntheticProperties>
@@ -97,6 +94,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Registrar Persona y Licencia"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRegistrarPersonaYLicenciaActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnSolicitarPlaca">
       <Properties>
@@ -111,6 +111,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Solicitar Placa"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSolicitarPlacaActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnConsultarHistorial">
       <Properties>
@@ -125,6 +128,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Consultar historial"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnConsultarHistorialActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnInsercionMasiva">
       <Properties>
@@ -139,6 +145,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Insertar 20 personas con licencia"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnInsercionMasivaActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

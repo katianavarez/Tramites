@@ -4,6 +4,13 @@
  */
 package pantallas;
 
+import control.Control;
+import dtos.PlacaDTO;
+import excepciones.NegocioException;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author katia
@@ -32,7 +39,7 @@ public class PantallaConsultarHistorialPlacas extends javax.swing.JFrame {
         btnBuscar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaHistorial = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        btnAtras = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ConsultarHistorialPlacas");
@@ -49,6 +56,11 @@ public class PantallaConsultarHistorialPlacas extends javax.swing.JFrame {
         btnBuscar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnBuscar.setForeground(new java.awt.Color(255, 255, 255));
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         tablaHistorial.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -63,10 +75,15 @@ public class PantallaConsultarHistorialPlacas extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(tablaHistorial);
 
-        jButton1.setBackground(new java.awt.Color(0, 0, 0));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Atrás");
+        btnAtras.setBackground(new java.awt.Color(0, 0, 0));
+        btnAtras.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnAtras.setForeground(new java.awt.Color(255, 255, 255));
+        btnAtras.setText("Atrás");
+        btnAtras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtrasActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -86,7 +103,7 @@ public class PantallaConsultarHistorialPlacas extends javax.swing.JFrame {
                 .addContainerGap(121, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(32, 32, 32)
-                .addComponent(jButton1)
+                .addComponent(btnAtras)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -103,53 +120,58 @@ public class PantallaConsultarHistorialPlacas extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(btnAtras)
                 .addGap(24, 24, 24))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PantallaConsultarHistorialPlacas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PantallaConsultarHistorialPlacas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PantallaConsultarHistorialPlacas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PantallaConsultarHistorialPlacas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        String numeroSerie = txtNumSerie.getText().trim();
+        
+        if (numeroSerie.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El número de serie es obligatorio.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new PantallaConsultarHistorialPlacas().setVisible(true);
+        try {
+            List<PlacaDTO> historial = Control.getInstancia().obtenerHistorialPlacas(numeroSerie);
+
+            DefaultTableModel modelo = new DefaultTableModel();
+            modelo.addColumn("Número de placa");
+            modelo.addColumn("Fecha de emisión");
+            modelo.addColumn("Costo");
+            
+            if (historial.isEmpty()) {
+                tablaHistorial.setModel(modelo);
+                JOptionPane.showMessageDialog(this, "El vehículo no tiene historial de placas.", "Sin historial", JOptionPane.INFORMATION_MESSAGE);
+                return;
             }
-        });
-    }
+
+            for (PlacaDTO dto : historial) {
+                modelo.addRow(new Object[]{
+                    dto.getNumeroPlaca(),
+                    dto.getFechaEmision(),
+                    dto.getCosto()
+                });
+            }
+            tablaHistorial.setModel(modelo);
+        } catch (NegocioException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
+        Control.getInstancia().mostrarPantallaInicio();
+        this.dispose();
+    }//GEN-LAST:event_btnAtrasActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAtras;
     private javax.swing.JButton btnBuscar;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblNumSerie;
     private javax.swing.JTable tablaHistorial;

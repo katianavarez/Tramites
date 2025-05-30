@@ -4,6 +4,10 @@
  */
 package pantallas;
 
+import control.Control;
+import excepciones.NegocioException;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author katia
@@ -16,7 +20,7 @@ public class PantallaInicio extends javax.swing.JFrame {
     public PantallaInicio() {
         initComponents();
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -46,21 +50,41 @@ public class PantallaInicio extends javax.swing.JFrame {
         btnRegistrarPersonaYLicencia.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 24)); // NOI18N
         btnRegistrarPersonaYLicencia.setForeground(new java.awt.Color(255, 255, 255));
         btnRegistrarPersonaYLicencia.setText("Registrar Persona y Licencia");
+        btnRegistrarPersonaYLicencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarPersonaYLicenciaActionPerformed(evt);
+            }
+        });
 
         btnSolicitarPlaca.setBackground(new java.awt.Color(0, 0, 0));
         btnSolicitarPlaca.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 24)); // NOI18N
         btnSolicitarPlaca.setForeground(new java.awt.Color(255, 255, 255));
         btnSolicitarPlaca.setText("Solicitar Placa");
+        btnSolicitarPlaca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSolicitarPlacaActionPerformed(evt);
+            }
+        });
 
         btnConsultarHistorial.setBackground(new java.awt.Color(0, 0, 0));
         btnConsultarHistorial.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 24)); // NOI18N
         btnConsultarHistorial.setForeground(new java.awt.Color(255, 255, 255));
         btnConsultarHistorial.setText("Consultar historial");
+        btnConsultarHistorial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarHistorialActionPerformed(evt);
+            }
+        });
 
         btnInsercionMasiva.setBackground(new java.awt.Color(0, 0, 0));
         btnInsercionMasiva.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 24)); // NOI18N
         btnInsercionMasiva.setForeground(new java.awt.Color(255, 255, 255));
         btnInsercionMasiva.setText("Insertar 20 personas con licencia");
+        btnInsercionMasiva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInsercionMasivaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -101,40 +125,30 @@ public class PantallaInicio extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PantallaInicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PantallaInicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PantallaInicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PantallaInicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void btnConsultarHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarHistorialActionPerformed
+        Control.getInstancia().mostrarPantallaConsultarHistorialPlacas();
+        dispose();
+    }//GEN-LAST:event_btnConsultarHistorialActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new PantallaInicio().setVisible(true);
-            }
-        });
-    }
+    private void btnRegistrarPersonaYLicenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarPersonaYLicenciaActionPerformed
+        Control.getInstancia().mostrarPantallaRegistroPersonaYLicencia();
+        dispose();
+    }//GEN-LAST:event_btnRegistrarPersonaYLicenciaActionPerformed
+
+    private void btnSolicitarPlacaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSolicitarPlacaActionPerformed
+        Control.getInstancia().mostrarPantallaMenuPlacas();
+        dispose();
+    }//GEN-LAST:event_btnSolicitarPlacaActionPerformed
+
+    private void btnInsercionMasivaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsercionMasivaActionPerformed
+        try {
+            Control.getInstancia().getPersonaBO().insertarMasivamentePersonasConLicencia(20);
+            JOptionPane.showMessageDialog(this, "Se insertaron 20 personas con licencia correctamente.");
+        } catch (NegocioException e) {
+            JOptionPane.showMessageDialog(this, "Error al insertar personas: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnInsercionMasivaActionPerformed
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConsultarHistorial;

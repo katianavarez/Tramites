@@ -4,6 +4,7 @@
  */
 package bos;
 
+import dtos.AutomovilDTO;
 import dtos.LicenciaDTO;
 import dtos.PersonaDTO;
 import dtos.PlacaDTO;
@@ -24,6 +25,7 @@ import interfaces.IPlacaBO;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Random;
+import mappers.AutomovilMapper;
 import mappers.PersonaMapper;
 import mappers.PlacaMapper;
 import mappers.VehiculoMapper;
@@ -38,18 +40,16 @@ public class PlacaBO implements IPlacaBO{
     private final IVehiculoDAO vehiculoDAO;
     private final ILicenciaDAO licenciaDAO;
     private final IPersonaDAO personaDAO;
-    private final PlacaMapper placaMapper;
-    private final VehiculoMapper vehiculoMapper;
-    private final PersonaMapper personaMapper;
+    private final PlacaMapper placaMapper = new PlacaMapper();
+    private final VehiculoMapper vehiculoMapper = new VehiculoMapper();
+    private final PersonaMapper personaMapper = new PersonaMapper();
+    private final AutomovilMapper automovilMapper = new AutomovilMapper();
 
     public PlacaBO(IPlacaDAO placaDAO, IVehiculoDAO vehiculoDAO, ILicenciaDAO licenciaDAO, IPersonaDAO personaDAO) {
         this.placaDAO = placaDAO;
         this.vehiculoDAO = vehiculoDAO;
         this.licenciaDAO = licenciaDAO;
         this.personaDAO = personaDAO;
-        this.placaMapper = new PlacaMapper();
-        this.vehiculoMapper = new VehiculoMapper();
-        this.personaMapper = new PersonaMapper();
     }
 
     @Override
@@ -70,21 +70,30 @@ public class PlacaBO implements IPlacaBO{
                 throw new NegocioException("La persona no tiene licencia vigente.");
             }
             
-            VehiculoDTO vehiculoDTO = new VehiculoDTO();
-            vehiculoDTO.setNumeroSerie(dto.getNumeroSerie());
-            vehiculoDTO.setMarca(dto.getMarca());
-            vehiculoDTO.setLinea(dto.getLinea());
-            vehiculoDTO.setColor(dto.getColor());
-            vehiculoDTO.setModelo(dto.getModelo());
-            Vehiculo vehiculo = vehiculoDAO.registrarVehiculo(vehiculoMapper.toEntity(vehiculoDTO));
-            vehiculoDTO = vehiculoMapper.toDTO(vehiculo);
+//            VehiculoDTO vehiculoDTO = new VehiculoDTO();
+//            vehiculoDTO.setNumeroSerie(dto.getNumeroSerie());
+//            vehiculoDTO.setMarca(dto.getMarca());
+//            vehiculoDTO.setLinea(dto.getLinea());
+//            vehiculoDTO.setColor(dto.getColor());
+//            vehiculoDTO.setModelo(dto.getModelo());
+//            Vehiculo vehiculo = vehiculoDAO.registrarVehiculo(vehiculoMapper.toEntity(vehiculoDTO));
+//            vehiculoDTO = vehiculoMapper.toDTO(vehiculo);
             
+            AutomovilDTO automovilDTO = new AutomovilDTO();
+            automovilDTO.setNumeroSerie(dto.getNumeroSerie());
+            automovilDTO.setMarca(dto.getMarca());
+            automovilDTO.setLinea(dto.getLinea());
+            automovilDTO.setColor(dto.getColor());
+            automovilDTO.setModelo(dto.getModelo());
+
+            Vehiculo vehiculo = vehiculoDAO.registrarVehiculo(automovilMapper.toEntity(automovilDTO));
+            dto.setIdVehiculo(vehiculo.getId());
+
             dto.setNumeroPlaca(generarNumeroPlaca());
             dto.setFechaEmision(LocalDate.now());
             dto.setEstado(EstadoPlaca.ACTIVA);
             dto.setTipo(TipoPlaca.NUEVO);
             dto.setCosto(1500.0);
-            dto.setIdVehiculo(vehiculoDTO.getId());
 
             Placa placa = placaMapper.toEntity(dto);
             placa.setVehiculo(vehiculo);
@@ -99,15 +108,20 @@ public class PlacaBO implements IPlacaBO{
     }
     
     @Override
-    public PlacaDTO registrarPlacaAutoUsado(PlacaDTO dto) throws NegocioException {
+    public PlacaDTO registrarPlacaAutoUsado(PlacaDTO dto, String rfcPersona) throws NegocioException {
         if (dto.getNumeroSerie() == null || dto.getNumeroSerie().isBlank()) {
             throw new NegocioException("El número de serie es obligatorio.");
-        }
-        if (dto.getFechaRecepcion() == null) {
-            throw new NegocioException("La fecha de recepción es obligatoria.");
-        }
+        }        
 
         try {
+            Persona persona = personaDAO.buscarPersonaPorRFC(rfcPersona);
+            if (persona == null) {
+                throw new NegocioException("No se encontró a la persona.");
+            }
+            Licencia licencia = licenciaDAO.licenciaVigente(persona.getId());
+            if (licencia == null) {
+                throw new NegocioException("La persona no tiene licencia vigente.");
+            }
             Vehiculo vehiculo = vehiculoDAO.buscarVehiculoPorNumSerie(dto.getNumeroSerie());
             if (vehiculo == null) {
                 throw new NegocioException("El vehículo no está registrado.");
@@ -116,12 +130,14 @@ public class PlacaBO implements IPlacaBO{
             
             dto.setNumeroPlaca(generarNumeroPlaca());
             dto.setFechaEmision(LocalDate.now());
+            dto.setFechaRecepcion(LocalDate.now());
             dto.setEstado(EstadoPlaca.ACTIVA);
             dto.setTipo(TipoPlaca.USADO);
             dto.setCosto(1000.0);
 
             Placa placa = placaMapper.toEntity(dto);
             placa.setVehiculo(vehiculo);
+            placa.setPersona(persona);
             placaDAO.registrarPlaca(placa);
             return placaMapper.toDTO(placa);
 
@@ -130,7 +146,17 @@ public class PlacaBO implements IPlacaBO{
         }
     }
 
-
+    @Override
+    public PlacaDTO generarPlacaAutoNuevo() {
+        PlacaDTO dto = new PlacaDTO();
+        dto.setNumeroPlaca(generarNumeroPlaca());
+        dto.setFechaEmision(LocalDate.now());
+        dto.setCosto(1500.0);
+        dto.setTipo(TipoPlaca.NUEVO);
+        dto.setEstado(EstadoPlaca.ACTIVA);
+        return dto;
+    }
+    
     private String generarNumeroPlaca() {
         String letras = RandomStringUtils.randomAlphabetic(3).toUpperCase();
         String numeros = String.format("%03d", new Random().nextInt(1000));

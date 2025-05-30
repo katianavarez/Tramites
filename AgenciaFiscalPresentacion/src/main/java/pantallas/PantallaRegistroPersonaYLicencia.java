@@ -4,18 +4,44 @@
  */
 package pantallas;
 
+import com.github.lgooddatepicker.components.DatePicker;
+import control.Control;
+import dtos.LicenciaDTO;
+import dtos.PersonaDTO;
+import enums.Duracion;
+import excepciones.NegocioException;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author katia
  */
-public class PantallaRegistroPersonaYLicencia extends javax.swing.JFrame {
-
+public class PantallaRegistroPersonaYLicencia extends javax.swing.JFrame {    
+    DatePicker datePickerNacimiento;
     /**
      * Creates new form PantallaRegistroPersonaYLicencia
      */
     public PantallaRegistroPersonaYLicencia() {
         initComponents();
+        configurarDateP();
+        
+        cmbDuracionLicencia.removeAllItems();
+        cmbDuracionLicencia.addItem("UNO");
+        cmbDuracionLicencia.addItem("DOS");
+        cmbDuracionLicencia.addItem("TRES");
     }
+    
+    private void configurarDateP() {
+        if (datePickerNacimiento == null) {
+            datePickerNacimiento = new com.github.lgooddatepicker.components.DatePicker();
+            datePickerNacimiento.setBounds(txtFechaNacimiento.getBounds());
+            this.getContentPane().remove(txtFechaNacimiento);
+            this.getContentPane().add(datePickerNacimiento);
+            this.getContentPane().revalidate();
+            this.getContentPane().repaint();
+        }
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -78,15 +104,31 @@ public class PantallaRegistroPersonaYLicencia extends javax.swing.JFrame {
         lblCostoLicencia.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         lblCostoLicencia.setText("Costo licencia");
 
+        txtCostoLicencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCostoLicenciaActionPerformed(evt);
+            }
+        });
+
         btnAtras.setBackground(new java.awt.Color(0, 0, 0));
         btnAtras.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnAtras.setForeground(new java.awt.Color(255, 255, 255));
         btnAtras.setText("Atrás");
+        btnAtras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtrasActionPerformed(evt);
+            }
+        });
 
         btnRegistrarPersonaYLicencia.setBackground(new java.awt.Color(0, 0, 0));
         btnRegistrarPersonaYLicencia.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnRegistrarPersonaYLicencia.setForeground(new java.awt.Color(255, 255, 255));
         btnRegistrarPersonaYLicencia.setText("Registrar Persona y Licencia");
+        btnRegistrarPersonaYLicencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarPersonaYLicenciaActionPerformed(evt);
+            }
+        });
 
         cmbDuracionLicencia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cmbDuracionLicencia.addActionListener(new java.awt.event.ActionListener() {
@@ -181,42 +223,66 @@ public class PantallaRegistroPersonaYLicencia extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cmbDuracionLicenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbDuracionLicenciaActionPerformed
-        // TODO add your handling code here:
+        String duracion = (String) cmbDuracionLicencia.getSelectedItem();
+        if (duracion != null) {
+            switch (duracion) {
+                case "UNO":
+                    txtCostoLicencia.setText("500");
+                    break;
+                case "DOS":
+                    txtCostoLicencia.setText("900");
+                    break;
+                case "TRES":
+                    txtCostoLicencia.setText("1200");
+                    break;
+                default:
+                    txtCostoLicencia.setText("");
+            }
+        }
     }//GEN-LAST:event_cmbDuracionLicenciaActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PantallaRegistroPersonaYLicencia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PantallaRegistroPersonaYLicencia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PantallaRegistroPersonaYLicencia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PantallaRegistroPersonaYLicencia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
+        Control.getInstancia().mostrarPantallaInicio();
+    }//GEN-LAST:event_btnAtrasActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new PantallaRegistroPersonaYLicencia().setVisible(true);
-            }
-        });
+    private void btnRegistrarPersonaYLicenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarPersonaYLicenciaActionPerformed
+        try {
+            PersonaDTO persona = new PersonaDTO();
+            persona.setNombre(txtNombre.getText().trim());
+            persona.setApellidoPaterno(txtApellidoP.getText().trim());
+            persona.setApellidoMaterno(txtApellidoM.getText().trim());
+            persona.setRfc(txtRfc.getText().trim());
+            persona.setTelefono(txtTelefono.getText().trim());
+            persona.setFechaNacimiento(datePickerNacimiento.getDate());
+
+            LicenciaDTO licencia = new LicenciaDTO();
+            licencia.setCosto(Double.parseDouble(txtCostoLicencia.getText().trim()));
+            licencia.setDuracion(Duracion.valueOf(cmbDuracionLicencia.getSelectedItem().toString()));
+
+            Control.getInstancia().registrarPersonaYLicencia(persona, licencia);
+
+            JOptionPane.showMessageDialog(this, "Registro exitoso.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            limpiarCampos();
+        } catch (NegocioException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error de negocio", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Datos inválidos o faltantes.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnRegistrarPersonaYLicenciaActionPerformed
+
+    private void txtCostoLicenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCostoLicenciaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCostoLicenciaActionPerformed
+
+    private void limpiarCampos() {
+        txtNombre.setText("");
+        txtApellidoP.setText("");
+        txtApellidoM.setText("");
+        txtRfc.setText("");
+        txtTelefono.setText("");
+        txtCostoLicencia.setText("");
+        datePickerNacimiento.clear();
+        cmbDuracionLicencia.setSelectedIndex(0);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
