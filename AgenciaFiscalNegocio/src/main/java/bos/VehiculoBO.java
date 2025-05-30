@@ -14,7 +14,10 @@ import java.time.LocalDate;
 import mappers.VehiculoMapper;
 
 /**
- *
+ * Implementación de la lógica de negocoi para las operaciones relacionadas
+ * con vehículos.
+ * Realiza validaciones.
+ * 
  * @author katia
  */
 public class VehiculoBO implements IVehiculoBO{
@@ -26,6 +29,15 @@ public class VehiculoBO implements IVehiculoBO{
         this.vehiculoMapper = new VehiculoMapper();
     }
 
+    /**
+     * Registra un nuevo vehículo.
+     * Valida campos obligatorios.
+     * Verifica que el número de serie no se repita.
+     *
+     * @param dto DTO con los datos del vehículo a registrar.
+     * @return VehiculoDTO con los datos del vehículo registrado.
+     * @throws NegocioException Si los datos son inválidos o si ya existe un vehículo con el mismo número de serie.
+     */
     @Override
     public VehiculoDTO registrarVehiculo(VehiculoDTO dto) throws NegocioException{
         if (dto == null) {
@@ -67,6 +79,13 @@ public class VehiculoBO implements IVehiculoBO{
         }
     }
     
+    /**
+     * Busca un vehículo por su número de serie.
+     *
+     * @param numeroSerie Número de serie del vehículo a buscar.
+     * @return VehiculoDTO con los datos del vehículo encontrado.
+     * @throws NegocioException Si el número de serie es inválido o si ocurre un error durante la búsqueda.
+     */
     @Override
     public VehiculoDTO buscarVehiculoPorNumSerie(String numeroSerie) throws NegocioException {
         if (numeroSerie == null || numeroSerie.isBlank()) {

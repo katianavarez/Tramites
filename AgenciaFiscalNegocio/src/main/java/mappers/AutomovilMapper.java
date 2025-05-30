@@ -10,12 +10,17 @@ import entidades.Automovil;
 import entidades.Vehiculo;
 
 /**
- *
+ * Mapper que convierte entre objetos Automovil y AutomovilDTO
  * @author katia
  */
 public class AutomovilMapper {
     private final VehiculoMapper vehiculoMapper = new VehiculoMapper();
 
+    /**
+     * Convierte un objeto AutomovilDTO  auna entidad Automovil.
+     * @param dto DTO de automóvil a convertir.
+     * @return La entidad Automovil o null si el DTO es nulo.
+     */
     public Automovil toEntity(AutomovilDTO dto) {
         if (dto == null){
             return null;
@@ -32,6 +37,11 @@ public class AutomovilMapper {
         return automovil;
     }
 
+    /**
+     * Convierte una entidad Automovil a AutomovilDTO
+     * @param automovil La entidad de automóvil a convertir.
+     * @return El DTO correspondiente o null si la entidad es nula.
+     */
     public AutomovilDTO toDTO(Automovil automovil) {
         if (automovil == null){
             return null;

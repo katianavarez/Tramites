@@ -22,7 +22,8 @@ import mappers.LicenciaMapper;
 import mappers.PersonaMapper;
 
 /**
- *
+ * Clase de negocio que implementa la lógica relacionada con las operaciones sobre personas.
+ * 
  * @author katia
  */
 public class PersonaBO implements IPersonaBO{
@@ -41,6 +42,12 @@ public class PersonaBO implements IPersonaBO{
         this.licenciaBO = licenciaBO;
     }
 
+    /**
+     * 
+     * @param personaDTO
+     * @return
+     * @throws NegocioException 
+     */
     @Override
     public PersonaDTO registrarPersona(PersonaDTO personaDTO) throws NegocioException {
         try {
@@ -55,6 +62,14 @@ public class PersonaBO implements IPersonaBO{
         }
     }
 
+    /**
+     * Registra una persona junto con su licencia.
+     *
+     * @param personaDTO Datos de la persona.
+     * @param licenciaDTO Datos de la licencia.
+     * @return Persona registrada.
+     * @throws NegocioException si los datos son inválidos o falla el registro.
+     */
     @Override
     public PersonaDTO registrarPersonaConLicencia(PersonaDTO personaDTO, LicenciaDTO licenciaDTO) throws NegocioException {
         try {
@@ -89,6 +104,13 @@ public class PersonaBO implements IPersonaBO{
         }
     }
 
+    /**
+     * Busca una persona por su RFC.
+     *
+     * @param rfc RFC de la persona.
+     * @return Persona correspondiente si se encuentra.
+     * @throws NegocioException si el RFC no es válido o no se encuentra a la persona.
+     */
     @Override
     public PersonaDTO buscarPersonaPorRFC(String rfc) throws NegocioException {
         if (rfc == null || rfc.length() != 13) {
@@ -102,6 +124,13 @@ public class PersonaBO implements IPersonaBO{
         }
     }
 
+    /**
+     * Busca una persona por su ID.
+     *
+     * @param id Identificador único de la persona.
+     * @return La persona encontrada.
+     * @throws NegocioException si no se encuentra la persona.
+     */
     @Override
     public PersonaDTO buscarPersonaPorId(Long id) throws NegocioException {
         try {
@@ -112,6 +141,10 @@ public class PersonaBO implements IPersonaBO{
         }
     }
 
+    /**
+     * Valida los campos requeridos de una persona, como la cantidad de caracteres
+     * o datos requeridos.
+     */
     private void validarPersona(PersonaDTO personaDTO) throws NegocioException {
         if (personaDTO.getRfc() == null || personaDTO.getRfc().isBlank()) {
             throw new NegocioException("El RFC es obligatorio.");
@@ -139,6 +172,12 @@ public class PersonaBO implements IPersonaBO{
         }
     }
     
+    /**
+     * Inserta personas con licencias a la vez generadas automáticamente.
+     *
+     * @param cantidad Número de personas a insertar.
+     * @throws NegocioException si la cantidad es inválida o ocurre un error.
+     */
     @Override
     public void insertarMasivamentePersonasConLicencia(int cantidad) throws NegocioException {
         if (cantidad <= 0) {
@@ -152,7 +191,7 @@ public class PersonaBO implements IPersonaBO{
                 persona.setApellidoPaterno("Lopez" + i);
                 persona.setApellidoMaterno("Soto" + i);
                 
-                String rfcBase = "RFC" + String.format("%010d", i); // RFC0000000001
+                String rfcBase = "RFC" + String.format("%010d", i);
                 String rfc = rfcBase.substring(0, 13);
                 persona.setRfc(rfc);
                 

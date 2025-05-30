@@ -9,7 +9,9 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
 /**
- *
+ * Clase utilizada para encriptar y desencriptar cadenas de texto usando
+ * el algoritmo AES con clave fija y condificación Base64.
+ * 
  * @author katia
  */
 public class Encriptador {
@@ -17,6 +19,12 @@ public class Encriptador {
     private static final String ALGORITMO = "AES";
     private static final String CLAVE = "clave-fija-para-";
 
+    /**
+     * Encripta una cadena de texto usando AES y la retorna codificada en Base64.
+     * 
+     * @param input Texto a encriptar.
+     * @return Texto encriptado.
+     */
     public static String encriptar(String input) {
         try {
             SecretKeySpec key = new SecretKeySpec(CLAVE.getBytes(), ALGORITMO); 
@@ -29,6 +37,12 @@ public class Encriptador {
         }
     }
 
+    /**
+     * Desencripta una cadena codificada en Base64 que fue previamente encriptada.
+     * 
+     * @param input Texto encriptado en Base64.
+     * @return Texto desencriptado en su forma original.
+     */
     public static String desencriptar(String input) {
         try {
             SecretKeySpec key = new SecretKeySpec(CLAVE.getBytes(), ALGORITMO);

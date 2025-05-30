@@ -14,7 +14,9 @@ import java.time.LocalDate;
 import mappers.AutomovilMapper;
 
 /**
- *
+ * Implementación de la interfaz IAutomovilBO que encapsula la lógica de negocio
+ * relacionada con automóviles.
+ * 
  * @author katia
  */
 public class AutomovilBO implements IAutomovilBO{
@@ -26,6 +28,14 @@ public class AutomovilBO implements IAutomovilBO{
         this.automovilMapper = new AutomovilMapper();
     }
     
+    /**
+     * Registra un nuevo automóvil en el sistema.
+     * Valida que los datos sean correctos.
+     * 
+     * @param dto Objeto AutomovilDTO con los datos del automóvil.
+     * @return El automóvil registrado como DTO.
+     * @throws NegocioException si los datos son inválidos o ya existe un automóvil con ese número de serie.
+     */
     @Override
     public AutomovilDTO registrarAutomovil(AutomovilDTO dto) throws NegocioException {
         if (dto == null) {
@@ -66,6 +76,12 @@ public class AutomovilBO implements IAutomovilBO{
         }
     }
 
+    /**
+     * Busca un automóvil existente por su número de serie.
+     * @param numeroSerie número de serie del automóvil a buscar.
+     * @return el automóvil encontrado como DTO.
+     * @throws NegocioException si el número de serie es inválido o si ocurre un error en la búsqueda.
+     */
     @Override
     public AutomovilDTO buscarPorNumeroSerie(String numeroSerie) throws NegocioException {
         if (numeroSerie == null || numeroSerie.isBlank()) {

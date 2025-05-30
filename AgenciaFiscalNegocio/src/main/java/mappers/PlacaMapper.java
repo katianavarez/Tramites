@@ -6,14 +6,20 @@ package mappers;
 
 import dtos.PlacaDTO;
 import entidades.Placa;
-import entidades.Vehiculo;
 
 /**
- *
+ *Mapper responsable de convertir entre objetos Placa y PlacaDTO.
+ * 
  * @author katia
  */
 public class PlacaMapper {
     
+    /**
+     * Convierte un objeto PlacaDTO  a una entidad Placa.
+     * 
+     * @param dto El DTO de la placa a convertir.
+     * @return la entidad Placa correspondiente.
+     */
     public Placa toEntity(PlacaDTO dto) {
         Placa placa = new Placa();
         placa.setId(dto.getId());
@@ -26,6 +32,12 @@ public class PlacaMapper {
         return placa;
     }
 
+    /**
+     * Convierte una entidad Placa a PlacaDTO.
+     * 
+     * @param placa la entidad de placa a convertir.
+     * @return el DTO correspondiente.
+     */
     public PlacaDTO toDTO(Placa placa) {
         PlacaDTO dto = new PlacaDTO();
         dto.setId(placa.getId());

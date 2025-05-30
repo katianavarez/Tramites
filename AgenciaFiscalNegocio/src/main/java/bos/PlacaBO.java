@@ -5,10 +5,7 @@
 package bos;
 
 import dtos.AutomovilDTO;
-import dtos.LicenciaDTO;
-import dtos.PersonaDTO;
 import dtos.PlacaDTO;
-import dtos.VehiculoDTO;
 import entidades.Licencia;
 import entidades.Persona;
 import entidades.Placa;
@@ -32,7 +29,8 @@ import mappers.VehiculoMapper;
 import org.apache.commons.lang3.RandomStringUtils;
 
 /**
- *
+ *  Clase de negocio que implementa las operaciones relacionadas con las placas.
+ * 
  * @author katia
  */
 public class PlacaBO implements IPlacaBO{
@@ -52,6 +50,15 @@ public class PlacaBO implements IPlacaBO{
         this.personaDAO = personaDAO;
     }
 
+    /**
+     * Registra una nueva placa para un automóvil nuevo.
+     * Verifica que estén los campos necesarios.
+     *
+     * @param dto Objeto con los datos de la placa y vehículo.
+     * @param rfcPersona RFC de la persona.
+     * @return La placa registrada con los datos completos.
+     * @throws NegocioException Si los datos son inválidos o ocurre un error en el registro.
+     */
     @Override
     public PlacaDTO registrarPlacaAutoNuevo(PlacaDTO dto, String rfcPersona) throws NegocioException {
         if (dto == null) {
@@ -69,15 +76,6 @@ public class PlacaBO implements IPlacaBO{
             if (licencia == null) {
                 throw new NegocioException("La persona no tiene licencia vigente.");
             }
-            
-//            VehiculoDTO vehiculoDTO = new VehiculoDTO();
-//            vehiculoDTO.setNumeroSerie(dto.getNumeroSerie());
-//            vehiculoDTO.setMarca(dto.getMarca());
-//            vehiculoDTO.setLinea(dto.getLinea());
-//            vehiculoDTO.setColor(dto.getColor());
-//            vehiculoDTO.setModelo(dto.getModelo());
-//            Vehiculo vehiculo = vehiculoDAO.registrarVehiculo(vehiculoMapper.toEntity(vehiculoDTO));
-//            vehiculoDTO = vehiculoMapper.toDTO(vehiculo);
             
             AutomovilDTO automovilDTO = new AutomovilDTO();
             automovilDTO.setNumeroSerie(dto.getNumeroSerie());
@@ -107,6 +105,15 @@ public class PlacaBO implements IPlacaBO{
         }
     }
     
+    /**
+     * Registra una nueva placa para un automóvil que ya esté en el sistema,
+     * desactivando la placa anterior.
+     *
+     * @param dto Objeto con los datos de la nueva placa.
+     * @param rfcPersona RFC de la persona.
+     * @return La placa registrada.
+     * @throws NegocioException Si los datos son inválidos o ocurre un error en el registro.
+     */
     @Override
     public PlacaDTO registrarPlacaAutoUsado(PlacaDTO dto, String rfcPersona) throws NegocioException {
         if (dto.getNumeroSerie() == null || dto.getNumeroSerie().isBlank()) {
@@ -146,6 +153,11 @@ public class PlacaBO implements IPlacaBO{
         }
     }
 
+    /**
+     * Genera una placa de forma aleatoria para autos nuevos.
+     *
+     * @return DTO con datos de la nueva placa.
+     */
     @Override
     public PlacaDTO generarPlacaAutoNuevo() {
         PlacaDTO dto = new PlacaDTO();
@@ -157,12 +169,24 @@ public class PlacaBO implements IPlacaBO{
         return dto;
     }
     
+    /**
+     * Genera un número de placa aleatorio con formato de tres letras + un guion + tres números.
+     *
+     * @return Número de placa generado.
+     */
     private String generarNumeroPlaca() {
         String letras = RandomStringUtils.randomAlphabetic(3).toUpperCase();
         String numeros = String.format("%03d", new Random().nextInt(1000));
         return letras + "-" + numeros;
     }
 
+    /**
+     * Obtiene el historial de placas de un vehículo por medio de su número de serie.
+     *
+     * @param numeroSerie Número de serie del vehículo.
+     * @return Lista de placas que ha tenido el vehículo.
+     * @throws NegocioException Si ocurre un error durante la búsqueda.
+     */
     @Override
     public List<PlacaDTO> obtenerHistorialPorNumSerie(String numeroSerie) throws NegocioException {
         if (numeroSerie == null || numeroSerie.isBlank()) {

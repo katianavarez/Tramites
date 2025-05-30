@@ -14,7 +14,9 @@ import java.time.LocalDate;
 import mappers.LicenciaMapper;
 
 /**
- *
+ * Implementación de la interfaz ILicenciaBO que gestiona la lógica de negocio
+ * para el registro y la validación de licencias de conducir.
+ * 
  * @author katia
  */
 public class LicenciaBO implements ILicenciaBO{
@@ -26,6 +28,14 @@ public class LicenciaBO implements ILicenciaBO{
         this.mapper = new LicenciaMapper();
     }
 
+    /**
+     * Registra una nueva licencia, si la persona no cuenta con una vigente.
+     * Calcula el costo dependiendo la duración que se quiera.
+     * @param dto Datos de lalicencia a registrar.
+     * @return Objeto LicenciaDTO con el costo y fecha asignados.
+     * @throws NegocioException en caso de que la persona ya tenga licencia vigente
+     * o datos inválidos.
+     */
     @Override
     public LicenciaDTO registrarLicencia(LicenciaDTO dto) throws NegocioException {
         try {
@@ -62,6 +72,12 @@ public class LicenciaBO implements ILicenciaBO{
         }
     }
 
+    /**
+     * Consulta si una persona tiene una licencia vigente.
+     * @param idPersona Identificador único de la persona.
+     * @return La licencia vigente si se encuentra.
+     * @throws NegocioException si no hay licencia vigente o si ocurre algún error.
+     */
     @Override
     public LicenciaDTO licenciaVigente(Long idPersona) throws NegocioException {
         try {

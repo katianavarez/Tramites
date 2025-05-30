@@ -5,16 +5,20 @@
 package mappers;
 
 import dtos.LicenciaDTO;
-import dtos.PersonaDTO;
 import entidades.Licencia;
 import entidades.Persona;
 
 /**
- *
+ * Mapper encargado de convertir entre objetos Licencia y LicenciaDTO.
  * @author katia
  */
 public class LicenciaMapper{
     
+    /**
+     * Convierte un LicenciaDTO en una entidad Licencia.
+     * @param dto El DTO a convertir.
+     * @return La entidad, o null si el dto es nulo.
+     */
     public Licencia toEntity(LicenciaDTO dto) {
         if (dto == null){ 
             return null;
@@ -30,6 +34,11 @@ public class LicenciaMapper{
         return entidad;
     }
     
+    /**
+     * Convierte una entidad Licencia a LicenciaDTO
+     * @param entidad La entidad a convertir.
+     * @return El DTO correspondiente, o null si la entidad es nula.
+     */
     public LicenciaDTO toDTO(Licencia entidad) {
         if (entidad == null){
             return null;
